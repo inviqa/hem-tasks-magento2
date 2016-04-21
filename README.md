@@ -1,4 +1,4 @@
-# Hem::Tasks::Magento1
+# Hem::Tasks::Magento2
 
 Contains tasks for [Hem](https://github.com/inviqa/hem) to provide functionality
 for Magento 2.* projects
