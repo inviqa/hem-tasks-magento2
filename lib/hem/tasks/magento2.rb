@@ -15,7 +15,7 @@ namespace :magento2 do
   require_relative 'magento2/development'
 
   desc 'Initializes Magento2 specifics on the virtual machine after a fresh build'
-  task :'initialize-vm' => [
+  task 'initialize-vm': [
     'magento2:install:install_magento'
   ]
 end

@@ -73,8 +73,12 @@ namespace :install do
 
     [magento_media_directory, magento_static_directory].each do |dir|
       Hem.ui.title "Setup permissions - #{dir}"
-      run_command "if [ -e '#{dir}' ]; then sudo find '#{dir}' -type d -exec chmod a+rwx {} + ; fi", realtime: true, indent: 2
-      run_command "if [ -e '#{dir}' ]; then sudo find '#{dir}' -type f -exec chmod a+rw {} + ; fi", realtime: true, indent: 2
+      run_command "if [ -e '#{dir}' ]; then sudo find '#{dir}' -type d -exec chmod a+rwx {} + ; fi",
+                  realtime: true,
+                  indent: 2
+      run_command "if [ -e '#{dir}' ]; then sudo find '#{dir}' -type f -exec chmod a+rw {} + ; fi",
+                  realtime: true,
+                  indent: 2
     end
 
     Hem.ui.success('Permissions setup finished')
