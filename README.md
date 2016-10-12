@@ -19,6 +19,7 @@ Run the following to see usage:
 
 ```bash
 hem magento2
+```
 
 ## Development
 

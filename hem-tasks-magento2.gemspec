@@ -7,8 +7,8 @@ require 'hem/tasks/magento2/version'
 Gem::Specification.new do |spec|
   spec.name          = "hem-tasks-magento2"
   spec.version       = Hem::Tasks::Magento2::VERSION
-  spec.authors       = ["Norbert Nagy"]
-  spec.email         = ["nnagy@inviqa.com"]
+  spec.authors       = ["Norbert Nagy", "Kieren Evans"]
+  spec.email         = ["nnagy@inviqa.com", "kevans+hem_tasks@inviqa.com"]
 
   spec.summary       = %q{Magento 2 tasks for Hem}
   spec.description   = %q{Magento 2 tasks for Hem}
