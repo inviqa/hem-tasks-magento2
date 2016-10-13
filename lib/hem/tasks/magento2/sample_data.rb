@@ -33,6 +33,7 @@ namespace :sample_data do
         begin
           shell(*args)
 
+          execute_if_defined('deps:sync:composer_files_to_guest')
           execute_if_defined('vm:rsync_mount_sync')
 
           complete = true
