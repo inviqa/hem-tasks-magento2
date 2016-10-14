@@ -35,15 +35,16 @@ namespace :install do
 
       Rake::Task['magento2:configure'].invoke
       Rake::Task['magento2:sample_data:add'].invoke(from_install: true)
-      Rake::Task['magento2:setup_script:run'].invoke
-      Rake::Task['magento2:index:refresh'].invoke
-      Rake::Task['magento2:cache:clean'].invoke
-      Rake::Task['magento2:development:asset_symlinks'].invoke
-      Rake::Task['magento2:development:compile_less'].invoke
     end
 
     Rake::Task['magento2:install:set_permissions'].execute
     Rake::Task['magento2:install:optimise_autoloader'].invoke
+
+    Rake::Task['magento2:setup_script:run'].invoke
+    Rake::Task['magento2:index:refresh'].invoke
+    Rake::Task['magento2:cache:clean'].invoke
+    Rake::Task['magento2:development:asset_symlinks'].invoke
+    Rake::Task['magento2:development:compile_less'].invoke
   end
 
   desc 'Optimise the composer autoloader for a speed boost'
