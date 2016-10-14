@@ -11,7 +11,7 @@ task :configure do
     File.join(Hem.project_config.vm.project_mount_path, 'var', 'cache'),
     File.join(Hem.project_config.vm.project_mount_path, 'var', 'page_cache')
   ].each do |dir|
-    run "sudo rm -rf '#{dir}/.'", realtime: true, indent: 2
+    run "sudo rm -rf '#{dir}/*'", realtime: true, indent: 2
   end
 
   Hem.ui.success('Magento2 configuration update finished')
