@@ -7,8 +7,11 @@ task :configure do
   configuration_file = File.join(Hem.project_config.vm.project_mount_path, 'configure-magento-config.php')
   run_command "php #{configuration_file}", realtime: true, indent: 2
 
-  [File.join(Hem.project_path, 'var', 'cache'), File.join(Hem.project_path, 'var', 'page_cache')].each do |dir|
-    FileUtils.rm_rf("#{dir}/.", secure: true)
+  [
+    File.join(Hem.project_config.vm.project_mount_path, 'var', 'cache'),
+    File.join(Hem.project_config.vm.project_mount_path, 'var', 'page_cache')
+  ].each do |dir|
+    run "sudo rm -rf '#{dir}/*'", realtime: true, indent: 2
   end
 
   Hem.ui.success('Magento2 configuration update finished')
