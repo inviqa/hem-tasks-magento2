@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # ^ Syntax hint
 
+require_relative '../lib/patches/rake'
+
 before 'vm:up', 'magento2:install:create_vendor_dir'
 before 'vm:up', 'magento2:install:move_composer_json_file'
 after 'vm:up', 'magento2:initialize-vm'
