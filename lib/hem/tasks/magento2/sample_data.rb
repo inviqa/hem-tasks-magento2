@@ -10,10 +10,11 @@ namespace :sample_data do
   desc 'Adds Sample data to Magento 2'
   argument :from_install, optional: true, default: false
   task :add do |_task_name, task_args|
-    sample_data_answer = 'no'
-    sample_data_answers = %w(yes no)
-    if Hem.project_config[:sample_data].nil? || !sample_data_answers.include?(Hem.project_config[:sample_data])
-      sample_data_answer = Hem.ui.ask_choice('Sample data', sample_data_answers, default: 'yes')
+    sample_data_answer = nil
+    sample_data_answer = Hem.project_config[:sample_data] unless Hem.project_config[:sample_data].nil?
+    sample_data_answers = ['yes', 'no']
+    unless sample_data_answers.include?(Hem.project_config[:sample_data])
+      sample_data_answer = Hem.ui.ask_choice("Sample data", sample_data_answers, :default => 'yes')
       Hem.project_config[:sample_data] = sample_data_answer
       Hem::Config::File.save(Hem.project_config_file, Hem.project_config)
     end
