@@ -21,7 +21,7 @@ namespace :development do
     has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
                             capture: true
 
-    next unless has_javascript_option
+    next if has_javascript_option == ''
 
     Hem.ui.title 'Compiling Less files for the en_GB frontend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
@@ -38,7 +38,7 @@ namespace :development do
     has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
                             capture: true
 
-    next unless has_javascript_option
+    next if has_javascript_option == ''
 
     Hem.ui.title 'Compiling Less files for the en_GB and en_US backend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
