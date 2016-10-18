@@ -18,6 +18,11 @@ namespace :development do
 
   desc 'Compile the less files for the frontend themes'
   task :compile_less_frontend do
+    has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
+                            capture: true
+
+    next unless has_javascript_option
+
     Hem.ui.title 'Compiling Less files for the en_GB frontend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
                 '--no-images --no-html --no-misc --no-fonts --no-css '\
@@ -30,6 +35,10 @@ namespace :development do
 
   desc 'Compile the less files for the admin/backend themes'
   task :compile_less_backend do
+    has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
+                            capture: true
+
+    next unless has_javascript_option
 
     Hem.ui.title 'Compiling Less files for the en_GB and en_US backend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
