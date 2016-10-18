@@ -12,6 +12,12 @@ namespace :development do
 
   desc 'Compile the less files'
   task :compile_less do
+    Rake::Task['magento2:development:compile_less_frontend'].invoke
+    Rake::Task['magento2:development:compile_less_backend'].invoke
+  end
+
+  desc 'Compile the less files for the frontend themes'
+  task :compile_less_frontend do
     Hem.ui.title 'Compiling Less files for the en_GB frontend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
                 '--no-images --no-html --no-misc --no-fonts --no-css '\
@@ -20,6 +26,10 @@ namespace :development do
                 realtime: true,
                 indent: 2
     Hem.ui.success('Compile finished')
+  end
+
+  desc 'Compile the less files for the admin/backend themes'
+  task :compile_less_backend do
 
     Hem.ui.title 'Compiling Less files for the en_GB and en_US backend'
     run_command 'bin/magento setup:static-content:deploy --no-javascript '\
