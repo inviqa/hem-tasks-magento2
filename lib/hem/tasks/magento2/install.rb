@@ -59,20 +59,25 @@ namespace :install do
     Hem.ui.title 'Setup permissions'
 
     magento_binfile = File.join(Hem.project_config.vm.project_mount_path, 'bin', 'magento')
-    magento_var_directory = File.join(Hem.project_config.vm.project_mount_path, 'var')
-    magento_media_directory = File.join(Hem.project_config.vm.project_mount_path, 'pub', 'media')
-    magento_static_directory = File.join(Hem.project_config.vm.project_mount_path, 'pub', 'static')
+    chmod_dirs = [
+      File.join(Hem.project_config.vm.project_mount_path, 'pub', 'media'),
+      File.join(Hem.project_config.vm.project_mount_path, 'pub', 'static')
+    ]
+    var_directory = File.join(Hem.project_config.vm.project_mount_path, 'var')
+
+    var_is_bind_mount = run 'grep "/vagrant/var ext4" /proc/mounts || true', capture: true
+    chmod_dirs << var_directory if var_is_bind_mount == ''
 
     Hem.ui.title "Setup permissions - #{magento_binfile}"
     run_command "sudo chmod +x #{magento_binfile}", realtime: true, indent: 2
 
-    [magento_var_directory].each do |dir|
-      Hem.ui.title "Setup permissions - #{dir}"
-      run_command "sudo setfacl -R -m 'u:apache:rwX' -m 'u:vagrant:rwX' '#{dir}'", realtime: true, indent: 2
-      run_command "sudo setfacl -dR -m 'u:apache:rwX' -m 'u:vagrant:rwX' '#{dir}'", realtime: true, indent: 2
+    unless var_is_bind_mount == ''
+      Hem.ui.title "Setup permissions - #{var_directory}"
+      run_command "sudo setfacl -R -m 'u:apache:rwX' -m 'u:vagrant:rwX' '#{var_directory}'", realtime: true, indent: 2
+      run_command "sudo setfacl -dR -m 'u:apache:rwX' -m 'u:vagrant:rwX' '#{var_directory}'", realtime: true, indent: 2
     end
 
-    [magento_media_directory, magento_static_directory].each do |dir|
+    chmod_dirs.each do |dir|
       Hem.ui.title "Setup permissions - #{dir}"
       run_command "if [ -e '#{dir}' ]; then sudo find '#{dir}' -type d -exec chmod a+rwx {} + ; fi",
                   realtime: true,
