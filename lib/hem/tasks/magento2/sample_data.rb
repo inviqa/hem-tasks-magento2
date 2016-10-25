@@ -34,9 +34,6 @@ namespace :sample_data do
         begin
           shell(*args)
 
-          execute_if_defined('deps:sync:composer_files_to_guest')
-          execute_if_defined('vm:rsync_mount_sync')
-
           complete = true
         rescue Hem::ExternalCommandError
           Hem.ui.warning 'Installing sample data locally failed!'
@@ -44,12 +41,9 @@ namespace :sample_data do
       end
     end
 
-    unless complete
-      run(*args)
+    run(*args) unless complete
 
-      execute_if_defined('deps:sync:composer_files_from_guest')
-      execute_if_defined('deps:sync:vendor_directory_from_guest')
-    end
+    execute_if_defined('deps:sync:vendor_directory')
 
     magento_var_directory = File.join(Hem.project_config.vm.project_mount_path, 'var')
     run_command "sudo rm -rf #{magento_var_directory}/*", realtime: true, indent: 2
