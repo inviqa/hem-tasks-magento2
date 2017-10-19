@@ -19,12 +19,12 @@ namespace :development do
   desc 'Compile the less files for the frontend themes'
   task :compile_less_frontend do
     has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
-                            capture: true
+                                capture: true
 
     next if has_javascript_option == ''
 
     has_force_option = run 'bin/magento setup:static-content:deploy --help | grep -- --force || true',
-                       capture: true
+                           capture: true
 
     Hem.ui.title 'Compiling Less files for the en_GB frontend'
     command = 'bin/magento setup:static-content:deploy --no-javascript '\
@@ -39,18 +39,18 @@ namespace :development do
   desc 'Compile the less files for the admin/backend themes'
   task :compile_less_backend do
     has_javascript_option = run 'bin/magento setup:static-content:deploy --help | grep -- --no-javascript || true',
-                            capture: true
+                                capture: true
 
     next if has_javascript_option == ''
 
     has_force_option = run 'bin/magento setup:static-content:deploy --help | grep -- --force || true',
-                       capture: true
+                           capture: true
 
     Hem.ui.title 'Compiling Less files for the en_GB and en_US backend'
-    command += ' --force' if has_force_option
     command = 'bin/magento setup:static-content:deploy --no-javascript '\
               '--no-images --no-html --no-misc --no-fonts --no-css '\
               '--language en_GB --language en_US --area adminhtml'
+    command += ' --force' if has_force_option
     run_command command, realtime: true, indent: 2
     Hem.ui.success('Compile finished')
   end
