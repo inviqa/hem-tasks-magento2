@@ -23,13 +23,16 @@ namespace :development do
 
     next if has_javascript_option == ''
 
+    has_force_option = run 'bin/magento setup:static-content:deploy --help | grep -- --force || true',
+                       capture: true
+
     Hem.ui.title 'Compiling Less files for the en_GB frontend'
-    run_command 'bin/magento setup:static-content:deploy --no-javascript '\
-                '--no-images --no-html --no-misc --no-fonts --no-css '\
-                '--language en_GB --area frontend '\
-                '--theme Magento/luma --theme Magento/blank',
-                realtime: true,
-                indent: 2
+    command = 'bin/magento setup:static-content:deploy --no-javascript '\
+              '--no-images --no-html --no-misc --no-fonts --no-css '\
+              '--language en_GB --area frontend '\
+              '--theme Magento/luma --theme Magento/blank'
+    command += ' --force' if has_force_option
+    run_command command, realtime: true, indent: 2
     Hem.ui.success('Compile finished')
   end
 
@@ -40,12 +43,15 @@ namespace :development do
 
     next if has_javascript_option == ''
 
+    has_force_option = run 'bin/magento setup:static-content:deploy --help | grep -- --force || true',
+                       capture: true
+
     Hem.ui.title 'Compiling Less files for the en_GB and en_US backend'
-    run_command 'bin/magento setup:static-content:deploy --no-javascript '\
-                '--no-images --no-html --no-misc --no-fonts --no-css '\
-                '--language en_GB --language en_US --area adminhtml',
-                realtime: true,
-                indent: 2
+    command += ' --force' if has_force_option
+    command = 'bin/magento setup:static-content:deploy --no-javascript '\
+              '--no-images --no-html --no-misc --no-fonts --no-css '\
+              '--language en_GB --language en_US --area adminhtml'
+    run_command command, realtime: true, indent: 2
     Hem.ui.success('Compile finished')
   end
 
